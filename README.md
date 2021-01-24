@@ -6,5 +6,7 @@
 
 Integration library for [MUnit](https://scalameta.org/munit/) and any effect type.
 
+This project ist strongly inspired by [typelevel/munit-cats-effect](https://github.com/typelevel/munit-cats-effect).
+
 ## License
 This project uses the Apache 2.0 License. See the file called LICENSE.
