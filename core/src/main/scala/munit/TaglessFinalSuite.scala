@@ -13,7 +13,7 @@ abstract class TaglessFinalSuite[F[_]](implicit private val tag: ClassTag[F[_]])
   private val fTransform: ValueTransform =
     new ValueTransform(
       tag.runtimeClass.getSimpleName,
-      { case f: F[_] => toFuture(f) }
+      { case tag(f: F[_]) => toFuture(f) }
     )
 
   override def munitValueTransforms: List[ValueTransform] =
