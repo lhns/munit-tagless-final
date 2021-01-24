@@ -4,9 +4,9 @@ import cats.effect.concurrent.Deferred
 import cats.effect.{Concurrent, Resource}
 import cats.syntax.flatMap._
 import cats.syntax.functor._
+import munit.internal.FutureCompat._
 
-import scala.concurrent.Await
-import scala.concurrent.duration.Duration
+import scala.util.{Failure, Success}
 
 trait TaglessFinalFunFixtures[F[_]] extends FunFixtures {
   self: TaglessFinalSuite[F] =>
@@ -60,13 +60,34 @@ trait TaglessFinalFunFixtures[F[_]] extends FunFixtures {
     def test(name: String)(
       body: T => Any
     )(implicit loc: Location): Unit = {
-      Await.result(self.toFuture[FunFixture[T]](fixture), Duration.Inf).test(TestOptions(name))(body)
+      test(TestOptions(name))(body)(loc)
     }
 
     def test(options: TestOptions)(
       body: T => Any
     )(implicit loc: Location): Unit = {
-      Await.result(self.toFuture[FunFixture[T]](fixture), Duration.Inf).test(options)(body)
+      self.test(options) {
+        implicit val ec = munitExecutionContext
+        // the setup, test and teardown need to keep the happens-before execution order
+        self.toFuture[FunFixture[T]](fixture).flatMap { fixture =>
+          fixture.setup(options).flatMap { argument =>
+            munitValueTransform(body(argument))
+              .transformWithCompat(testValue =>
+                fixture.teardown(argument).transformCompat {
+                  case Success(_) => testValue
+                  case teardownFailure@Failure(teardownException) =>
+                    testValue match {
+                      case testFailure@Failure(testException) =>
+                        testException.addSuppressed(teardownException)
+                        testFailure
+                      case _ =>
+                        teardownFailure
+                    }
+                }
+              )
+          }
+        }
+      }(loc)
     }
   }
 
