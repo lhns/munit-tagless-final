@@ -8,5 +8,10 @@ Integration library for [MUnit](https://scalameta.org/munit/) and any effect typ
 
 This project ist strongly inspired by [typelevel/munit-cats-effect](https://github.com/typelevel/munit-cats-effect).
 
+### build.sbt
+```sbt
+libraryDependencies += "de.lolhens" %% "munit-tagless-final" % "0.0.1"
+```
+
 ## License
 This project uses the Apache 2.0 License. See the file called LICENSE.
