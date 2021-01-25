@@ -10,7 +10,7 @@ This project ist strongly inspired by [typelevel/munit-cats-effect](https://gith
 
 ### build.sbt
 ```sbt
-libraryDependencies += "de.lolhens" %% "munit-tagless-final" % "0.0.1"
+libraryDependencies += "de.lolhens" %% "munit-tagless-final" % "0.0.1" % Test
 ```
 
 ## License
