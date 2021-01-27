@@ -10,7 +10,11 @@ This project ist strongly inspired by [typelevel/munit-cats-effect](https://gith
 
 ### build.sbt
 ```sbt
+// use this snippet for the JVM
 libraryDependencies += "de.lolhens" %% "munit-tagless-final" % "0.0.1" % Test
+
+// use this snippet for JS, or cross-building
+libraryDependencies += "de.lolhens" %%% "munit-tagless-final" % "0.0.1" % Test
 ```
 
 ## License
