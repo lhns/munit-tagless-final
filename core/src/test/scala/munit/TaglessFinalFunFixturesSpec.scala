@@ -22,9 +22,7 @@ import cats.syntax.flatMap._
 import scala.concurrent.duration._
 import scala.concurrent.{ExecutionContext, Future, Promise}
 
-class TaglessFinalFunFixturesSpec extends TaglessFinalSuite[IO] with TaglessFinalFunFixtures[IO] {
-
-  override protected def toFuture[A](f: IO[A]): Future[A] = f.unsafeToFuture()
+class TaglessFinalFunFixturesSpec extends CatsEffectSuite with TaglessFinalFunFixtures[IO] {
 
   implicit def munitContextShift: ContextShift[IO] =
     IO.contextShift(ExecutionContext.global)

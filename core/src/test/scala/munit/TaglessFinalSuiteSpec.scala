@@ -21,12 +21,7 @@ import cats.effect.{ContextShift, IO, Timer}
 import scala.concurrent.duration._
 import scala.concurrent.{ExecutionContext, Future}
 
-class TaglessFinalSuiteSpec extends TaglessFinalSuite[IO] {
-
-  override protected def toFuture[A](f: IO[A]): Future[A] = f.unsafeToFuture()
-
-  implicit def munitContextShift: ContextShift[IO] =
-    IO.contextShift(ExecutionContext.global)
+class TaglessFinalSuiteSpec extends CatsEffectSuite {
 
   implicit def munitTimer: Timer[IO] =
     IO.timer(ExecutionContext.global)

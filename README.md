@@ -18,8 +18,19 @@ libraryDependencies += "de.lolhens" %%% "munit-tagless-final" % "0.0.1" % Test
 ```
 
 ## Example
-### Monix
+### Cats Effect
 ```scala
+import cats.effect.IO
+
+import scala.concurrent.Future
+
+abstract class CatsEffectSuite extends TaglessFinalSuite[IO] {
+  override protected def toFuture[A](f: IO[A]): Future[A] = f.unsafeToFuture()
+}
+```
+
+### Monix
+  ```scala
 import monix.eval.Task
 import monix.execution.Scheduler
 
