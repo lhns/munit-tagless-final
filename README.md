@@ -30,7 +30,7 @@ abstract class CatsEffectSuite extends TaglessFinalSuite[IO] {
 ```
 
 ### Monix
-  ```scala
+```scala
 import monix.eval.Task
 import monix.execution.Scheduler
 
