@@ -17,5 +17,18 @@ libraryDependencies += "de.lolhens" %% "munit-tagless-final" % "0.0.1" % Test
 libraryDependencies += "de.lolhens" %%% "munit-tagless-final" % "0.0.1" % Test
 ```
 
+## Example
+### Monix
+```scala
+import monix.eval.Task
+import monix.execution.Scheduler
+
+import scala.concurrent.Future
+
+abstract class TaskSuite extends munit.TaglessFinalSuite[Task] {
+  override protected def toFuture[A](f: Task[A]): Future[A] = f.runToFuture(Scheduler.global)
+}
+```
+
 ## License
 This project uses the Apache 2.0 License. See the file called LICENSE.
