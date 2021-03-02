@@ -4,7 +4,7 @@
 [![Maven Central](https://img.shields.io/maven-central/v/de.lolhens/munit-tagless-final_2.13)](https://search.maven.org/artifact/de.lolhens/munit-tagless-final_2.13)
 [![Apache License 2.0](https://img.shields.io/github/license/LolHens/munit-tagless-final.svg?maxAge=3600)](https://www.apache.org/licenses/LICENSE-2.0)
 
-Integration library for [MUnit](https://scalameta.org/munit/) and any effect type.
+Integration library for [MUnit](https://scalameta.org/munit/) and any effect type via [cats-effect](https://github.com/typelevel/cats-effect/).
 
 This project ist strongly inspired by [typelevel/munit-cats-effect](https://github.com/typelevel/munit-cats-effect).
 
