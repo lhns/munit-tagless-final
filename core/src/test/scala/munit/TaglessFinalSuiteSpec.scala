@@ -16,15 +16,11 @@
 
 package munit
 
-import cats.effect.{ContextShift, IO, Timer}
+import cats.effect.IO
 
 import scala.concurrent.duration._
-import scala.concurrent.{ExecutionContext, Future}
 
 class TaglessFinalSuiteSpec extends CatsEffectSuite {
-
-  implicit def munitTimer: Timer[IO] =
-    IO.timer(ExecutionContext.global)
 
   test("nested IO fail".fail) {
     IO {

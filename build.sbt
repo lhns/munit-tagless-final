@@ -58,8 +58,9 @@ lazy val core = projectMatrix.in(file("core"))
   .settings(commonSettings)
   .settings(
     libraryDependencies ++= Seq(
-      "org.scalameta" %%% "munit" % "0.7.21",
-      "org.typelevel" %%% "cats-effect" % "2.3.1"
+      "org.scalameta" %%% "munit" % "0.7.22",
+      "org.typelevel" %%% "cats-effect-kernel" % "3.0.0-RC2",
+      "org.typelevel" %%% "cats-effect" % "3.0.0-RC2" % Test,
     ),
 
     testFrameworks += new TestFramework("munit.Framework"),

@@ -16,16 +16,12 @@
 
 package munit
 
-import cats.effect.{ContextShift, IO, Timer}
+import cats.effect.IO
 import cats.syntax.all._
 
 import scala.concurrent.duration._
-import scala.concurrent.{ExecutionContext, Future}
 
 class TaglessFinalAssertionsSyntaxSpec extends CatsEffectSuite {
-
-  implicit def munitTimer: Timer[IO] =
-    IO.timer(ExecutionContext.global)
 
   test("assertEquals (for IO) works (successful assertion)") {
     val io = IO.sleep(2.millis) *> IO(2)

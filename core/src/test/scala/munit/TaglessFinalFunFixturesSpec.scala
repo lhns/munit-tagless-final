@@ -16,20 +16,13 @@
 
 package munit
 
-import cats.effect.{ContextShift, IO, Resource, Timer}
+import cats.effect.{IO, Resource}
 import cats.syntax.flatMap._
 
+import scala.concurrent.Promise
 import scala.concurrent.duration._
-import scala.concurrent.{ExecutionContext, Future, Promise}
 
 class TaglessFinalFunFixturesSpec extends CatsEffectSuite with TaglessFinalFunFixtures[IO] {
-
-  implicit def munitContextShift: ContextShift[IO] =
-    IO.contextShift(ExecutionContext.global)
-
-  implicit def munitTimer: Timer[IO] =
-    IO.timer(ExecutionContext.global)
-
 
   val latch: Promise[Unit] = Promise[Unit]()
   var completedFromTest: Option[Boolean] = None

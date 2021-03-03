@@ -1,6 +1,6 @@
 package munit
 
-import cats.effect.{Async, Sync}
+import cats.effect.kernel.{Async, Sync}
 import cats.syntax.applicativeError._
 import cats.syntax.eq._
 import cats.syntax.flatMap._
