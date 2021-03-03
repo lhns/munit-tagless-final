@@ -24,7 +24,7 @@ libraryDependencies += "de.lolhens" %%% "munit-tagless-final" % "0.1.0" % Test
 ```
 
 ## Example
-### Cats Effect
+### Cats Effect 2
 ```scala
 import cats.effect.IO
 
@@ -32,6 +32,17 @@ import scala.concurrent.Future
 
 abstract class CatsEffectSuite extends TaglessFinalSuite[IO] {
   override protected def toFuture[A](f: IO[A]): Future[A] = f.unsafeToFuture()
+}
+```
+
+### Cats Effect 3
+```scala
+import cats.effect.{IO, unsafe}
+
+import scala.concurrent.Future
+
+abstract class CatsEffectSuite extends TaglessFinalSuite[IO] {
+  override protected def toFuture[A](f: IO[A]): Future[A] = f.unsafeToFuture()(unsafe.IORuntime.global)
 }
 ```
 
