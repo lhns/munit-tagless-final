@@ -1,6 +1,6 @@
 /*
- * Modifications Pierre Kisters
  * Copyright 2021 Typelevel
+ * Modifications by Pierre Kisters
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
