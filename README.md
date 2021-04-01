@@ -7,7 +7,7 @@
 
 Integration library for [MUnit](https://scalameta.org/munit/) and any effect type via [cats-effect](https://github.com/typelevel/cats-effect/).
 
-This project ist strongly inspired by [typelevel/munit-cats-effect](https://github.com/typelevel/munit-cats-effect).
+This project is based on [typelevel/munit-cats-effect](https://github.com/typelevel/munit-cats-effect).
 
 ### build.sbt
 ```sbt
