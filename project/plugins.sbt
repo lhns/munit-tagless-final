@@ -1,6 +1,6 @@
 addSbtPlugin("com.timushev.sbt" % "sbt-updates" % "0.5.3")
 
-addSbtPlugin("com.eed3si9n" % "sbt-projectmatrix" % "0.7.0")
+addSbtPlugin("com.eed3si9n" % "sbt-projectmatrix" % "0.8.0")
 
 addSbtPlugin("org.scala-js" % "sbt-scalajs" % "1.5.1")
 
