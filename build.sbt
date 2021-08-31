@@ -59,7 +59,7 @@ lazy val core = projectMatrix.in(file("core"))
   .settings(commonSettings)
   .settings(
     libraryDependencies ++= Seq(
-      "org.scalameta" %%% "munit" % "0.7.28",
+      "org.scalameta" %%% "munit" % "0.7.29",
       "org.typelevel" %%% "cats-effect-kernel" % "3.2.5",
       "org.typelevel" %%% "cats-effect" % "3.2.5" % Test,
     ),
