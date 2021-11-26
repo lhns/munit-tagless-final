@@ -18,10 +18,10 @@ libraryDependencies += "de.lolhens" %% "munit-tagless-final" % "0.0.1" % Test
 libraryDependencies += "de.lolhens" %%% "munit-tagless-final" % "0.0.1" % Test
 
 // use this snippet for cats-effect 3 and the JVM
-libraryDependencies += "de.lolhens" %% "munit-tagless-final" % "0.1.3" % Test
+libraryDependencies += "de.lolhens" %% "munit-tagless-final" % "0.2.0" % Test
 
 // use this snippet for cats-effect 3 and JS, or cross-building
-libraryDependencies += "de.lolhens" %%% "munit-tagless-final" % "0.1.3" % Test
+libraryDependencies += "de.lolhens" %%% "munit-tagless-final" % "0.2.0" % Test
 ```
 
 ## Example
