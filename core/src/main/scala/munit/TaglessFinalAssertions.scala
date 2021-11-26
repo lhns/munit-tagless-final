@@ -18,10 +18,11 @@
 package munit
 
 import cats.effect.kernel.{Async, Sync}
-import cats.syntax.applicativeError._
 import cats.syntax.eq._
 import cats.syntax.flatMap._
+import munit.TaglessFinalAssertions._
 
+import scala.language.implicitConversions
 import scala.reflect.ClassTag
 import scala.util.control.NonFatal
 
@@ -87,8 +88,9 @@ trait TaglessFinalAssertions[F[_]] {
     *   }
     * }}}
     */
-  def interceptF[T <: Throwable](f: F[_])(implicit AsyncF: Async[F], T: ClassTag[T], loc: Location): F[T] = {
-    f.attempt.flatMap[T](runInterceptF[F, T](None))
+  def interceptF[T <: Throwable]: InterceptPartiallyApplied[F, T] = new InterceptPartiallyApplied[F, T] {
+    override def apply[A](f: F[A])(implicit AsyncF: Async[F], T: ClassTag[T], loc: Location): F[T] =
+      AsyncF.attempt(f).flatMap[T](runInterceptF[F, T](None))
   }
 
   /** Intercepts a `Throwable` with a certain message being thrown inside the provided `F`.
@@ -110,8 +112,10 @@ trait TaglessFinalAssertions[F[_]] {
     */
   def interceptMessageF[T <: Throwable](
                                          expectedExceptionMessage: String
-                                       )(f: F[_])(implicit AsyncF: Async[F], T: ClassTag[T], loc: Location): F[T] =
-    f.attempt.flatMap[T](runInterceptF[F, T](Some(expectedExceptionMessage)))
+                                       ): InterceptPartiallyApplied[F, T] = new InterceptPartiallyApplied[F, T] {
+    override def apply[A](f: F[A])(implicit AsyncF: Async[F], T: ClassTag[T], loc: Location): F[T] =
+      AsyncF.attempt(f).flatMap[T](runInterceptF[F, T](Some(expectedExceptionMessage)))
+  }
 
   /** Copied from `munit.Assertions` and adapted to return `F[T]` instead of `T`.
     */
@@ -188,7 +192,7 @@ trait TaglessFinalAssertions[F[_]] {
       * }}}
       */
     def intercept[T <: Throwable](implicit AsyncF: Async[F], T: ClassTag[T], loc: Location): F[T] =
-      interceptF[T](f)
+      interceptF(f)
 
     /** Intercepts a `Throwable` with a certain message being thrown inside this effect.
       *
@@ -202,7 +206,7 @@ trait TaglessFinalAssertions[F[_]] {
     def interceptMessage[T <: Throwable](
                                           expectedExceptionMessage: String
                                         )(implicit AsyncF: Async[F], T: ClassTag[T], loc: Location): F[T] =
-      interceptMessageF[T](expectedExceptionMessage)(f)
+      interceptMessageF(expectedExceptionMessage)(f)
 
   }
 
@@ -219,4 +223,10 @@ trait TaglessFinalAssertions[F[_]] {
       assertFBoolean(f, "value is not true")
   }
 
+}
+
+object TaglessFinalAssertions {
+  trait InterceptPartiallyApplied[F[_], T] {
+    def apply[A](f: F[A])(implicit AsyncF: Async[F], T: ClassTag[T], loc: Location): F[T]
+  }
 }

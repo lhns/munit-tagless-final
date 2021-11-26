@@ -3,7 +3,7 @@ package munit
 import scala.concurrent.Future
 import scala.reflect.ClassTag
 
-abstract class TaglessFinalSuite[F[_]](implicit private val tag: ClassTag[F[_]])
+abstract class TaglessFinalSuite[F[_]](implicit private val tag: ClassTag[F[Any]])
   extends FunSuite
     with TaglessFinalAssertions[F]
     with TaglessFinalFunFixtures[F] {
