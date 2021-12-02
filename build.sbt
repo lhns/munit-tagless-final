@@ -5,8 +5,11 @@ ThisBuild / versionScheme := Some("early-semver")
 
 lazy val commonSettings: SettingsDefinition = Def.settings(
   organization := "de.lolhens",
-  name := "munit-tagless-final",
-  version := "0.0.1-SNAPSHOT",
+  version := {
+    val Tag = "refs/tags/(.*)".r
+    sys.env.get("CI_VERSION").collect { case Tag(tag) => tag }
+      .getOrElse("0.0.1-SNAPSHOT")
+  },
 
   licenses += ("Apache-2.0", url("https://www.apache.org/licenses/LICENSE-2.0")),
 
@@ -43,7 +46,7 @@ lazy val commonSettings: SettingsDefinition = Def.settings(
   )).toList
 )
 
-name := (root / name).value
+name := (core.projectRefs.head / name).value
 
 lazy val root: Project =
   project
@@ -58,6 +61,8 @@ lazy val root: Project =
 lazy val core = projectMatrix.in(file("core"))
   .settings(commonSettings)
   .settings(
+    name := "munit-tagless-final",
+
     libraryDependencies ++= Seq(
       "org.scalameta" %%% "munit" % "0.7.29",
       "org.typelevel" %%% "cats-effect-kernel" % "3.3.0",
