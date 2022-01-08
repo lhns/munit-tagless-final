@@ -13,7 +13,7 @@ lazy val commonSettings: SettingsDefinition = Def.settings(
 
   licenses += ("Apache-2.0", url("https://www.apache.org/licenses/LICENSE-2.0")),
 
-  homepage := Some(url("https://github.com/LolHens/munit-tagless-final")),
+  homepage := scmInfo.value.map(_.browseUrl),
   scmInfo := Some(
     ScmInfo(
       url("https://github.com/LolHens/munit-tagless-final"),
@@ -25,11 +25,6 @@ lazy val commonSettings: SettingsDefinition = Def.settings(
   ),
 
   Compile / doc / sources := Seq.empty,
-
-  version := {
-    val tagPrefix = "refs/tags/"
-    sys.env.get("CI_VERSION").filter(_.startsWith(tagPrefix)).map(_.drop(tagPrefix.length)).getOrElse(version.value)
-  },
 
   publishMavenStyle := true,
 
