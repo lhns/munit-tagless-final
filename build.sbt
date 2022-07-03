@@ -1,4 +1,4 @@
-lazy val scalaVersions = Seq("3.1.2", "2.13.8", "2.12.16")
+lazy val scalaVersions = Seq("3.1.3", "2.13.8", "2.12.15")
 
 ThisBuild / scalaVersion := scalaVersions.head
 ThisBuild / versionScheme := Some("early-semver")
@@ -60,8 +60,8 @@ lazy val core = projectMatrix.in(file("core"))
 
     libraryDependencies ++= Seq(
       "org.scalameta" %%% "munit" % "0.7.29",
-      "org.typelevel" %%% "cats-effect-kernel" % "3.3.12",
-      "org.typelevel" %%% "cats-effect" % "3.3.12" % Test,
+      "org.typelevel" %%% "cats-effect-kernel" % "3.3.13",
+      "org.typelevel" %%% "cats-effect" % "3.3.13" % Test,
     ),
 
     testFrameworks += new TestFramework("munit.Framework"),
