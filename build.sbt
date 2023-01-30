@@ -2,11 +2,17 @@ lazy val scalaVersions = Seq("3.2.1", "2.13.10", "2.12.17")
 
 ThisBuild / scalaVersion := scalaVersions.head
 ThisBuild / versionScheme := Some("early-semver")
+ThisBuild / organization := "de.lhns"
+name := (core.projectRefs.head / name).value
+
+val V = new {
+  val catsEffect = "3.4.5"
+  val munit = "0.7.29"
+}
 
 lazy val commonSettings: SettingsDefinition = Def.settings(
-  organization := "de.lolhens",
   version := {
-    val Tag = "refs/tags/(.*)".r
+    val Tag = "refs/tags/v?([0-9]+(?:\\.[0-9]+)+(?:[+-].*)?)".r
     sys.env.get("CI_VERSION").collect { case Tag(tag) => tag }
       .getOrElse("0.0.1-SNAPSHOT")
   },
@@ -16,12 +22,12 @@ lazy val commonSettings: SettingsDefinition = Def.settings(
   homepage := scmInfo.value.map(_.browseUrl),
   scmInfo := Some(
     ScmInfo(
-      url("https://github.com/LolHens/munit-tagless-final"),
-      "scm:git@github.com:LolHens/munit-tagless-final.git"
+      url("https://github.com/lhns/munit-tagless-final"),
+      "scm:git@github.com:lhns/munit-tagless-final.git"
     )
   ),
   developers := List(
-    Developer(id = "LolHens", name = "Pierre Kisters", email = "pierrekisters@gmail.com", url = url("https://github.com/LolHens/"))
+    Developer(id = "lhns", name = "Pierre Kisters", email = "pierrekisters@gmail.com", url = url("https://github.com/lhns/"))
   ),
 
   Compile / doc / sources := Seq.empty,
@@ -30,18 +36,35 @@ lazy val commonSettings: SettingsDefinition = Def.settings(
 
   publishTo := sonatypePublishToBundle.value,
 
+  sonatypeCredentialHost := {
+    if (sonatypeProfileName.value == "de.lolhens")
+      "oss.sonatype.org"
+    else
+      "s01.oss.sonatype.org"
+  },
+
   credentials ++= (for {
     username <- sys.env.get("SONATYPE_USERNAME")
     password <- sys.env.get("SONATYPE_PASSWORD")
   } yield Credentials(
     "Sonatype Nexus Repository Manager",
-    "oss.sonatype.org",
+    sonatypeCredentialHost.value,
     username,
     password
-  )).toList
+  )).toList,
+
+  pomExtra := {
+    if (sonatypeProfileName.value == "de.lolhens")
+      <distributionManagement>
+        <relocation>
+          <groupId>de.lhns</groupId>
+        </relocation>
+      </distributionManagement>
+    else
+      pomExtra.value
+  }
 )
 
-name := (core.projectRefs.head / name).value
 
 lazy val root: Project =
   project
@@ -59,9 +82,9 @@ lazy val core = projectMatrix.in(file("core"))
     name := "munit-tagless-final",
 
     libraryDependencies ++= Seq(
-      "org.scalameta" %%% "munit" % "0.7.29",
-      "org.typelevel" %%% "cats-effect-kernel" % "3.4.5",
-      "org.typelevel" %%% "cats-effect" % "3.4.5" % Test,
+      "org.scalameta" %%% "munit" % V.munit,
+      "org.typelevel" %%% "cats-effect-kernel" % V.catsEffect,
+      "org.typelevel" %%% "cats-effect" % V.catsEffect % Test,
     ),
 
     testFrameworks += new TestFramework("munit.Framework"),
