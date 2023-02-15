@@ -6,7 +6,7 @@ ThisBuild / organization := "de.lhns"
 name := (core.projectRefs.head / name).value
 
 val V = new {
-  val catsEffect = "3.4.5"
+  val catsEffect = "3.4.7"
   val munit = "0.7.29"
 }
 
