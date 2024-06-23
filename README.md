@@ -13,10 +13,10 @@ This project is based on [typelevel/munit-cats-effect](https://github.com/typele
 ### build.sbt
 ```sbt
 // use this snippet for cats-effect 3 and the JVM
-libraryDependencies += "de.lhns" %% "munit-tagless-final" % "0.2.1" % Test
+libraryDependencies += "de.lhns" %% "munit-tagless-final" % "0.3.0" % Test
 
 // use this snippet for cats-effect 3 and JS, or cross-building
-libraryDependencies += "de.lhns" %%% "munit-tagless-final" % "0.2.1" % Test
+libraryDependencies += "de.lhns" %%% "munit-tagless-final" % "0.3.0" % Test
 ```
 
 ## Example
