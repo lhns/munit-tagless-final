@@ -24,5 +24,3 @@ jobs:
           SONATYPE_PASSWORD: ${{ secrets.SONATYPE_PASSWORD }}
         run: |
           sbt "; test; sonatypeBundleClean; publishSigned; sonatypeBundleRelease"
-          sed -i -e 's/organization := "de.lhns"/organization := "de.lolhens"/' build.sbt
-          sbt "; sonatypeBundleClean; publishSigned; sonatypeBundleRelease"
