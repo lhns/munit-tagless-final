@@ -7,7 +7,7 @@ name := (core.projectRefs.head / name).value
 
 val V = new {
   val catsEffect = "3.5.4"
-  val munit = "1.0.0"
+  val munit = "1.0.1"
 }
 
 lazy val commonSettings: SettingsDefinition = Def.settings(
